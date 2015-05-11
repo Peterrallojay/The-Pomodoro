@@ -16,15 +16,17 @@
     dispatch_once(&onceToken, ^{
         roundsController = [RoundsController new];
         
+        
     });
     
     return roundsController;
 }
 
-- (NSArray *)getRoundsTimes {
-    NSArray *roundTimes = @[@25,@5,@25,@5,@25,@15];
+
+
+- (NSArray *)roundTimes {
     
-    return roundTimes;
+    return @[@25,@5,@25,@5,@25,@15];
     
 }
 @end

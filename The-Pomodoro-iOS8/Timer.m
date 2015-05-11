@@ -25,6 +25,8 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         timer = [Timer new];
+        timer.minutes = 4;
+        timer.seconds = 20;
     });
 
     return timer;
@@ -33,7 +35,7 @@
 -(void)startTimer {
     
     self.isOn = YES;
-    //[self checkActive];
+    [self checkActive];
     
     
 }
@@ -42,11 +44,49 @@
     
     self.isOn = NO;
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:TimerCompleteNotificiation object:self];
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     //Instructions unclear on sending TimerCompletionNotification
+}
+
+- (void)decreaseSecond
+{
+    //decrease one second from remaining time.
     
+    if (self.seconds > 0) {
+        self.seconds--;
+        [[NSNotificationCenter defaultCenter] postNotificationName:SecondTickNotification object:self];
+    } else if(self.seconds == 0 && self.minutes > 0)
+    {
+        self.minutes--;
+        self.seconds = 59;
+        [[NSNotificationCenter defaultCenter] postNotificationName:SecondTickNotification object:self];
+        
+        
+    } else {
+        
+        [self endTimer];
+        
+    }
+
+}
+
+- (void)checkActive
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
     
-    
+    if(self.isOn == YES)
+    {
+        [self decreaseSecond];
+        [self performSelector:@selector(checkActive) withObject:nil afterDelay:1.0];
+    }
     
 }
+
+- (void)cancelTimer
+{
+    self.isOn = NO;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
 @end

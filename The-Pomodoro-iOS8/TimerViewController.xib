@@ -16,8 +16,12 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqx-pz-HrF">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqx-pz-HrF">
                     <rect key="frame" x="266" y="473" width="68" height="75"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="68" id="Dtt-jG-gag"/>
+                        <constraint firstAttribute="height" constant="75" id="zC9-nO-swz"/>
+                    </constraints>
                     <state key="normal" title="Button">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -25,7 +29,7 @@
                         <action selector="timerButtonTapped:" destination="-1" eventType="touchUpInside" id="dqw-00-rmc"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Timer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etw-iR-5WK">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etw-iR-5WK">
                     <rect key="frame" x="278" y="289" width="44" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -33,6 +37,12 @@
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="fqx-pz-HrF" secondAttribute="bottom" constant="52" id="98v-DH-pz8"/>
+                <constraint firstItem="fqx-pz-HrF" firstAttribute="centerX" secondItem="etw-iR-5WK" secondAttribute="centerX" id="X6D-Is-pnL"/>
+                <constraint firstItem="etw-iR-5WK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="289" id="XAJ-1V-fsd"/>
+                <constraint firstItem="fqx-pz-HrF" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="khs-AS-zI1"/>
+            </constraints>
         </view>
     </objects>
 </document>
