@@ -104,7 +104,7 @@ Pay attention to what the class does for you, walk through each method, understa
   - that will update the minutes and seconds on the ```[Timer sharedInstance]``` from the ```currentRound``` property
   - that will send a ```NewRoundNotification``` notification
 - In the ```RoundsViewController```, add didSelectRowAtIndexPath
-  - set the ```currentRound``` property of ```[RoundsViewController sharedInstance] to the indexPath.row
+  - set the ```currentRound``` property of ```[RoundsController sharedInstance] to the indexPath.row
   - and call ```roundSelected```
   - and call ```cancelTimer```
 
