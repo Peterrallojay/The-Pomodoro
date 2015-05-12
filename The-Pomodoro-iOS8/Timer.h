@@ -9,20 +9,18 @@
 #import <Foundation/Foundation.h>
 
 static NSString *const SecondTickNotification = @"secondTickNotification";
-static NSString *const TimerCompleteNotificiation = @"timerCompleteNotification";
+static NSString *const TimerCompleteNotification = @"timerCompleteNotification";
 static NSString *const NewRoundNotification = @"newRoundNotification";
 
 
 @interface Timer : NSObject
-@property (nonatomic) NSInteger minutes;
-@property (nonatomic) NSInteger seconds;
+@property (assign, nonatomic) NSInteger minutes;
+@property (assign, nonatomic) NSInteger seconds;
 
++ (Timer *)sharedInstance;
 
 - (void)startTimer;
 - (void)cancelTimer;
 - (void)endTimer;
-
-
-+ (instancetype)sharedInstance;
 
 @end

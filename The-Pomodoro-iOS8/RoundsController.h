@@ -10,8 +10,10 @@
 
 @interface RoundsController : NSObject
 @property (strong, nonatomic, readonly) NSArray *roundTimes;
-@property (nonatomic) NSUInteger *currentRound;
+@property (assign, nonatomic) NSUInteger currentRound;
 
-+ (instancetype)roundsController;
++ (instancetype)sharedInstance;
+
+- (void) roundSelected;
 
 @end

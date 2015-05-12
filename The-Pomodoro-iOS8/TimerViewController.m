@@ -10,6 +10,7 @@
 #import "Timer.h"
 
 @interface TimerViewController ()
+
 @property (weak, nonatomic) IBOutlet UILabel *timerLabel;
 @property (weak, nonatomic) IBOutlet UIButton *timerButton;
 
@@ -17,14 +18,48 @@
 
 @implementation TimerViewController
 
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    if(self)
+    {
+        [self registerForNotifications];
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+//Call update timer and enable the button
+- (IBAction)timerButtonTapped:(id)sender {
+    self.timerButton.enabled = NO;
+    [[Timer sharedInstance] startTimer];
+}
+
+
+//Call update tier and enab;e the button
+- (void)newRound
+{
+    [self updateTimerLabel];
+    self.timerButton.enabled = YES;
+}
+
+//set the minutes and seconds to the Timer seconds and minutes property
 - (void)updateTimerLabel
 {
-//    _timerLabel = [Timer sharedInstance];
+    //    _timerLabel = [Timer sharedInstance];
     
     NSInteger minutes = [Timer sharedInstance].minutes;
     NSInteger seconds = [Timer sharedInstance].seconds;
@@ -36,19 +71,17 @@
 {
     NSString *timerString;
     if(minutes >= 10){
-        timerString = [NSString stringWithFormat:@"%li", (long)minutes];
+        timerString = [NSString stringWithFormat:@"%li:", (long)minutes];
     }
     else{
-        timerString = [NSString stringWithFormat:@"0%li", (long)minutes];
+        timerString = [NSString stringWithFormat:@"0%li:", (long)minutes];
     }
     if (seconds >=10) {
         timerString = [timerString stringByAppendingString:[NSString stringWithFormat:@"%li", (long)seconds]];
-        
     }
     else
     {
         timerString = [timerString stringByAppendingString:[NSString stringWithFormat:@"0%li", (long)seconds]];
-
     }
     
     return timerString;
@@ -58,9 +91,8 @@
 - (void)registerForNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTimerLabel) name:SecondTickNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startTimer) name:NewRoundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endTimer) name:TimerCompleteNotificiation object:nil];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newRound) name:NewRoundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newRound) name:NewRoundNotification object:nil];
     
 }
 
@@ -69,21 +101,12 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+//unregister for notifications
 - (void)dealloc
 {
     [self unregisterForNotifications];
 }
 
-- (IBAction)timerButtonTapped:(id)sender {
-    self.timerButton.enabled = NO;
-    [[Timer sharedInstance] startTimer];
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 /*
 #pragma mark - Navigation

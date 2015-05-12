@@ -9,6 +9,7 @@
 #import "Timer.h"
 
 @interface Timer()
+
 @property (nonatomic) BOOL isOn;
 
 @end
@@ -19,14 +20,17 @@
 //decrease second void method
 
 
-+ (instancetype)sharedInstance {
++ (Timer *)sharedInstance {
     
     static Timer *timer = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         timer = [Timer new];
+        
+        /*
         timer.minutes = 4;
         timer.seconds = 20;
+         */
     });
 
     return timer;
@@ -44,8 +48,8 @@
     
     self.isOn = NO;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:TimerCompleteNotificiation object:self];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:TimerCompleteNotification object:nil];
+    //[NSObject cancelPreviousPerformRequestsWithTarget:self];
     //Instructions unclear on sending TimerCompletionNotification
 }
 
@@ -73,9 +77,7 @@
 
 - (void)checkActive
 {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    
-    if(self.isOn == YES)
+    if(self.isOn)
     {
         [self decreaseSecond];
         [self performSelector:@selector(checkActive) withObject:nil afterDelay:1.0];
