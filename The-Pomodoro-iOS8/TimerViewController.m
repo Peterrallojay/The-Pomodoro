@@ -17,6 +17,18 @@
 
 @implementation TimerViewController
 
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    if(self)
+    {
+        [self registerForNotifications];
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -36,10 +48,10 @@
 {
     NSString *timerString;
     if(minutes >= 10){
-        timerString = [NSString stringWithFormat:@"%li", (long)minutes];
+        timerString = [NSString stringWithFormat:@"%li:", (long)minutes];
     }
     else{
-        timerString = [NSString stringWithFormat:@"0%li", (long)minutes];
+        timerString = [NSString stringWithFormat:@"0%li:", (long)minutes];
     }
     if (seconds >=10) {
         timerString = [timerString stringByAppendingString:[NSString stringWithFormat:@"%li", (long)seconds]];
@@ -55,11 +67,17 @@
     
 }
 
+- (void) newRound
+{
+    [self updateTimerLabel];
+    self.timerButton.enabled = YES;
+}
+
 - (void)registerForNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTimerLabel) name:SecondTickNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startTimer) name:NewRoundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endTimer) name:TimerCompleteNotificiation object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newRound) name:NewRoundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newRound) name:TimerCompleteNotificiation object:nil];
 
     
 }

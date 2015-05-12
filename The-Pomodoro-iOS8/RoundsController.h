@@ -7,11 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Timer.h"
 
 @interface RoundsController : NSObject
-@property (strong, nonatomic, readonly) NSArray *roundTimes;
-@property (nonatomic) NSUInteger *currentRound;
 
-+ (instancetype)roundsController;
+@property (strong, nonatomic, readonly) NSArray *roundTimes;
+@property (strong, nonatomic, readonly) NSArray *imageArray;
+
+@property (nonatomic) NSInteger currentRound;
+
++ (instancetype)sharedInstance;
+
+- (void)roundSelected;
 
 @end

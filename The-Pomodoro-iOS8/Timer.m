@@ -25,8 +25,11 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         timer = [Timer new];
+        
+        /*
         timer.minutes = 4;
         timer.seconds = 20;
+         */
     });
 
     return timer;
@@ -36,8 +39,7 @@
     
     self.isOn = YES;
     [self checkActive];
-    
-    
+
 }
 
 -(void)endTimer {
