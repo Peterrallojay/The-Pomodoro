@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+@import UIKit;
 
 static NSString *const SecondTickNotification = @"secondTickNotification";
 static NSString *const TimerCompleteNotificiation = @"timerCompleteNotification";
 static NSString *const NewRoundNotification = @"newRoundNotification";
+static NSString *const expirationDate = @"expireDate";
 
 
 @interface Timer : NSObject
@@ -22,6 +24,8 @@ static NSString *const NewRoundNotification = @"newRoundNotification";
 - (void)startTimer;
 - (void)cancelTimer;
 - (void)endTimer;
+- (void)prepareForBackground;
+- (void)loadFromBackground;
 
 
 + (instancetype)sharedInstance;

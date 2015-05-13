@@ -65,6 +65,8 @@ static NSString * const reuseID = @"reuseID";
     [[RoundsController sharedInstance] roundSelected];
     [[Timer sharedInstance] cancelTimer];
     
+    self.tabBarController.selectedViewController = self.tabBarController.viewControllers[0];
+    
 }
 
 - (void)registerForNotifications

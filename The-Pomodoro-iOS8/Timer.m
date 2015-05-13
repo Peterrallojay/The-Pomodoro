@@ -10,6 +10,7 @@
 
 @interface Timer()
 @property (nonatomic) BOOL isOn;
+@property (strong, nonatomic) NSDate *expirationDate;
 
 @end
 
@@ -26,6 +27,8 @@
     dispatch_once(&onceToken, ^{
         timer = [Timer new];
         
+        
+        
         /*
         timer.minutes = 4;
         timer.seconds = 20;
@@ -38,7 +41,22 @@
 -(void)startTimer {
     
     self.isOn = YES;
+    
+    NSTimeInterval timerLength = self.minutes *60 + self.seconds;
+    self.expirationDate = [NSDate dateWithTimeIntervalSinceNow:timerLength];
+    UILocalNotification *localNotification = [UILocalNotification new];
+    
+    if (localNotification) {
+        localNotification.fireDate = self.expirationDate;
+        localNotification.timeZone = [NSTimeZone defaultTimeZone];
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        localNotification.alertBody = @"Timer Finished.";
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+    }
+    
+    
     [self checkActive];
+   
 
 }
 
@@ -89,6 +107,25 @@
 {
     self.isOn = NO;
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+}
+
+- (void)prepareForBackground
+{
+    [[NSUserDefaults standardUserDefaults] setObject:self.expirationDate forKey:expirationDate];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)loadFromBackground
+{
+    self.expirationDate = [[NSUserDefaults standardUserDefaults] objectForKey:expirationDate];
+    NSTimeInterval seconds = [self.expirationDate timeIntervalSinceNow];
+    
+    self.minutes = seconds / 60;
+    
+    self.seconds = seconds - (self.minutes * 60);
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:SecondTickNotification object:nil];
 }
 
 @end
